@@ -1,5 +1,28 @@
 import unittest
-from team_effort_cal import calculate_individual_effort_hours  
+from team_effort_cal import calculate_individual_effort_hours,calculate_total_effort_hours
+
+class TestCalculateTotalEffortHours(unittest.TestCase):
+    def test_total_effort_hours_happy_path(self):
+        """Happy path: Proper calculation with valid inputs."""
+        team_members_effort_hours = {
+            'John': 40,
+            'Jane': 35,
+            'Doe': 25
+        }
+        self.assertEqual(
+            calculate_total_effort_hours(team_members_effort_hours),
+            100,  # Expected total effort-hours: 40 + 35 + 25
+            "Failed to calculate total effort hours correctly for valid inputs."
+        )
+
+    def test_total_effort_hours_empty_input(self):
+        """Unhappy path: No team members provided."""
+        team_members_effort_hours = {}
+        self.assertEqual(
+            calculate_total_effort_hours(team_members_effort_hours),
+            0,  # Expected total effort-hours: 0 for empty input
+            "Failed to handle empty input correctly for total effort hours calculation."
+        )
 
 class TestCalculateIndividualEffortHours(unittest.TestCase):
     def test_happy_path(self):
@@ -41,8 +64,12 @@ class TestCalculateIndividualEffortHours(unittest.TestCase):
             "Expected zero effort hours, but got a different result."
         )
 
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestCalculateIndividualEffortHours))
+    suite.addTest(unittest.makeSuite(TestCalculateTotalEffortHours))
+    return suite
+
 if __name__ == '__main__':
-    loader = unittest.TestLoader()
-    suite = loader.loadTestsFromTestCase(TestCalculateIndividualEffortHours)
     runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    runner.run(suite())
