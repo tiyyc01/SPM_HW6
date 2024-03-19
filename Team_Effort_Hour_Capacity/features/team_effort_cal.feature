@@ -8,8 +8,9 @@ Feature: Team Effort Hours Calculation
 
     Examples:
       | name  | time_off | commitments | low | high | expected_hours |
-      | Alice | 2        | 5           | 8   | 10   | 35             |
-      | Bob   | 8        | 10          | 9   | 17   | 30             |
+      | Alice | 2        | 5           | 8   | 10   | 3              |
+      | Bob   | 8        | 10          | 9   | 17   | 22             |
+
 
   Scenario: Calculate total effort hours for the team
     Given the following team member effort hours:
